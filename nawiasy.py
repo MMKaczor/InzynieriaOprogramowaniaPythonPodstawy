@@ -32,8 +32,19 @@ def check_parentheses(s: str) -> bool:
     """
     ### TUTAJ PODAJ ROZWIĄZANIE ZADANIA
 
+    stack = []
+
+    for char in s:
+        if char == '(':
+            stack.append(char)
+        elif char == ')':
+            if not stack:
+                return False
+            stack.pop()
+
+    return len(stack) == 0
+
     ### return False - powinno być zmienione i zwrócić prawdziwy wynik (zgodny z oczekiwaniami)
-    return False
 
 # Przykładowe wywołanie:
 if __name__ == "__main__":

@@ -30,6 +30,15 @@ def verify_pesel(pesel: str) -> int:
     """
     ### TUTAJ PODAJ ROZWIĄZANIE ZADANIA
 
+    wagi = [1, 3, 7, 9, 1, 3, 7, 9, 1, 3]
+    suma = 0
+
+    for i in range(10):
+        suma += int(pesel[i]) * wagi[i]
+
+    cyfra_kontrolna = (10 - (suma % 10)) % 10
+    return 1 if cyfra_kontrolna == int(pesel[10]) else 0
+
     ### return 0 - powinno być zmienione i zwrócić prawdziwy wynik (zgodny z oczekiwaniami)
     return 0
 

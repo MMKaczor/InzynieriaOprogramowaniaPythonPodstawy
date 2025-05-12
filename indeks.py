@@ -49,8 +49,42 @@ def index_documents(documents: list[str], queries: list[str]) -> list[list[int]]
     """
     ### TUTAJ PODAJ ROZWIĄZANIE ZADANIA
 
+    import string
+    from collections import Counter
+
+    def index_documents(documents: list[str], queries: list[str]) -> list[list[int]]:
+        """
+        Przetwarza dokumenty i zapytania, zwracając listy indeksów dokumentów,
+        w których występuje zapytanie, posortowane według częstości wystąpienia
+        danego wyrazu (malejąco).
+        """
+        processed_docs = []
+
+        # usuwanie interpunkcji i przetwarzanie dokumentów do list słów
+        for doc in documents:
+            translator = str.maketrans('', '', string.punctuation)
+            words = doc.translate(translator).lower().split()
+            processed_docs.append(Counter(words))  # zliczamy słowa w dokumencie
+
+        results = []
+
+        # dla każdego zapytania
+        for query in queries:
+            query_lower = query.lower()
+            matches = []
+
+            for i, word_counts in enumerate(processed_docs):
+                count = word_counts.get(query_lower, 0)
+                if count > 0:
+                    matches.append((i, count))  # (numer dokumentu, liczba wystąpień)
+
+            # sortujemy po liczbie wystąpień malejąco, a opcjonalnie po numerze dokumentu rosnąco
+            matches.sort(key=lambda x: (-x[1], x[0]))
+            result = [doc_index for doc_index, _ in matches]
+            results.append(result)
+
     ### return [[]] - powinno być zmienione i zwrócić prawdziwy wynik (zgodny z oczekiwaniami)
-    return [[]]
+    return results
 
 
 # Przykładowe wywołanie:
